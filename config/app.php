@@ -233,6 +233,11 @@ return [
          */
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Antiflood' => Ircop\Antiflood\Facade\Antiflood::class,
+
+        /*
+         * Custom Facades...
+         */
+        'Incubator' => App\Facades\Incubator::class,
     ],
 
 ];

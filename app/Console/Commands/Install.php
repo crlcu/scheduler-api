@@ -57,8 +57,8 @@ class Install extends Command
         $this->call('view:clear');
 
         # cache config and routes
-        $this->info('Caching config and routes');
-        $this->call('config:cache');
-        $this->call('route:cache');
+        // $this->info('Caching config and routes');
+        // $this->call('config:cache');
+        // $this->call('route:cache');
     }
 }

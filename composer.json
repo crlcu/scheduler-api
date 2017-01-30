@@ -10,6 +10,7 @@
         "ircop/antiflood": "^0.1.2",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
+        "prettus/l5-repository": "^2.6",
         "venturecraft/revisionable": "^1.28"
     },
     "require-dev": {

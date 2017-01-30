@@ -39,7 +39,7 @@ class TaskExecution extends Model
      *
      * @var array
      */
-    protected $appends = ['duration', 'duration_for_humans', 'is_running', 'result_preview', 'status_class', 'status_icon', 'status_title'];
+    protected $appends = ['duration', 'duration_for_humans', 'is_running', 'result_preview', 'status_icon', 'status_title'];
 
 
     /**
@@ -71,18 +71,6 @@ class TaskExecution extends Model
     public function getResultPreviewAttribute($value)
     {
         return str_limit($this->result, 100);
-    }
-
-    public function getStatusClassAttribute($value)
-    {
-        $class = [
-            'running'       => '',
-            'completed'     => '',
-            'failed'        => 'red lighten-5',
-            'interrupted'   => 'orange lighten-5',
-        ];
-
-        return isset($class[$this->status]) ? $class[$this->status] : '';
     }
 
     public function getStatusIconAttribute($value)

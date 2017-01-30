@@ -35,7 +35,7 @@ class Task extends Model
      *
      * @var array
      */
-    protected $appends = ['average', 'average_for_humans', 'cron_for_humans', 'details', 'has_notifications', 'status_class', 'ssh', 'schedule'];
+    protected $appends = ['average', 'average_for_humans', 'cron_for_humans', 'details', 'has_notifications', 'ssh', 'schedule'];
 
     /**
      * Searchable rules.
@@ -114,11 +114,6 @@ class Task extends Model
         return 1;
         
         return $this->notifications->count() > 0;
-    }
-
-    public function getStatusClassAttribute($value)
-    {
-        return $this->is_enabled ? $this->last_run && $this->last_run->status_class : 'grey lighten-4';
     }
 
     public function getSshAttribute($value)
