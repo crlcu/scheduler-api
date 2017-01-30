@@ -2,9 +2,10 @@
 
 namespace App\Listeners;
 
-use App\Events\TaskRunning;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+
+use App\Jobs\Notifications\SendMany;
 
 class TasksListener implements ShouldQueue
 {
@@ -43,12 +44,7 @@ class TasksListener implements ShouldQueue
     {
         dump('onTaskRunning');
 
-        // $notifications = $event->task->notifications()->running()->get();
-
-        // foreach ($notifications as $notification)
-        // {
-        //     $notification->send();
-        // }
+        $this->send($event->task->notifications()->running()->get());
     }
 
     /**
@@ -58,12 +54,7 @@ class TasksListener implements ShouldQueue
     {
         dump('onTaskFailed');
 
-        // $notifications = $event->task->notifications()->failed()->get();
-
-        // foreach ($notifications as $notification)
-        // {
-        //     $notification->send();
-        // }
+        $this->send($event->task->notifications()->failed()->get());
     }
 
     /**
@@ -73,12 +64,7 @@ class TasksListener implements ShouldQueue
     {
         dump('onTaskInterrupted');
 
-        // $notifications = $task->notifications()->interrupted()->get();
-
-        // foreach ($notifications as $notification)
-        // {
-        //     $notification->send();
-        // }
+        $this->send($event->task->notifications()->interrupted()->get());
     }
 
     /**
@@ -88,11 +74,14 @@ class TasksListener implements ShouldQueue
     {
         dump('onTaskCompleted');
 
-        // $notifications = $event->task->notifications()->completed()->get();
+        $this->send($event->task->notifications()->completed()->get());
+    }
 
-        // foreach ($notifications as $notification)
-        // {
-        //     $notification->send();
-        // }
+    private function send($notifications)
+    {
+        if ($notifications->count())
+        {
+            dispatch(new SendMany($notifications));
+        }
     }
 }

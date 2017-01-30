@@ -22,10 +22,10 @@ class CreateTasksTable extends Migration
             $table->string('name');
             $table->longText('command');
             $table->tinyInteger('is_one_time_only')->default(0);
-            $table->string('cron_expression')->nullable();;
+            $table->string('cron_expression')->nullable();
             $table->dateTime('next_due')->nullable();
             $table->tinyInteger('is_via_ssh')->default(0);
-            $table->text('ssh_config_json')->nullable();;
+            $table->text('ssh_config_json')->nullable();
             $table->tinyInteger('is_concurrent')->default(0);
             $table->tinyInteger('is_enabled')->default(0);
             $table->tinyInteger('needs_review')->default(0);

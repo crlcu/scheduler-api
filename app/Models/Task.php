@@ -168,4 +168,20 @@ class Task extends Model
     {
         return $this->hasMany('App\Models\TaskExecution');
     }
+
+    public function last_run()
+    {
+        return $this->hasOne('App\Models\TaskExecution')
+            ->orderBy('id', 'desc');
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany('App\Models\TaskNotification');
+    }
+    
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 }

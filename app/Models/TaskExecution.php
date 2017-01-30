@@ -31,7 +31,7 @@ class TaskExecution extends Model
      * @var array
      */
     protected $fillable = [
-        'task_id', 'status', 'result'
+        'task_id', 'pid', 'status', 'result'
     ];
 
     /**
@@ -39,7 +39,7 @@ class TaskExecution extends Model
      *
      * @var array
      */
-    protected $appends = ['duration', 'duration_for_humans', 'is_running', 'result_preview', 'status_icon', 'status_title'];
+    protected $appends = ['duration', 'duration_for_humans', 'is_running', 'result_preview'];
 
 
     /**
@@ -71,30 +71,6 @@ class TaskExecution extends Model
     public function getResultPreviewAttribute($value)
     {
         return str_limit($this->result, 100);
-    }
-
-    public function getStatusIconAttribute($value)
-    {
-        $icons = [
-            'running'       => '<i class="material-icons orange-text animate-spin">sync</i>',
-            'completed'     => '<i class="material-icons green-text">done</i>',
-            'failed'        => '<i class="material-icons red-text">error</i>',
-            'interrupted'   => '<i class="material-icons orange-text">warning</i>',
-        ];
-
-        return isset($icons[$this->status]) ? $icons[$this->status] : '';
-    }
-
-    public function getStatusTitleAttribute($value)
-    {
-        $title = [
-            'running'       => 'Execution is running.',
-            'completed'     => 'Execution is now completed.',
-            'failed'        => 'Execution failed.',
-            'interrupted'   => 'Execution was interrupted.',
-        ];
-
-        return isset($title[$this->status]) ? $title[$this->status] : '';
     }
 
     /**
@@ -150,26 +126,6 @@ class TaskExecution extends Model
     /**
      * Methods
      */
-    public function done($status = 'completed')
-    {
-        $this->update([
-            'status' => $status,
-        ]);
-
-        if ($status == 'completed')
-        {
-            Event::fire(new TaskCompleted($this->task));
-        }
-        elseif ($status == 'failed')
-        {
-            Event::fire(new TaskFailed($this->task));
-        }
-        elseif ($status == 'interrupted')
-        {
-            Event::fire(new TaskInterrupted($this->task));
-        }
-    }
-
     public function stop()
     {
         if (!$this->task->is_via_ssh)

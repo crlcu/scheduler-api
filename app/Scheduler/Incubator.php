@@ -119,7 +119,7 @@ class Incubator
     {
         $ok = true;
 
-        if (!$this->task->is_concurrent && $this->task->last_run['is_running'])
+        if (!$this->task->is_concurrent && $this->task->last_run && $this->task->last_run->is_running)
         {
             $ok = false;
         }
