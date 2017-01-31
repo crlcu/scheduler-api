@@ -8,6 +8,9 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 
+use Mail;
+use App\Mail\Notification;
+
 class AsMail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -32,6 +35,8 @@ class AsMail implements ShouldQueue
     public function handle()
     {
         dump("sending out mail");
-        dump($this->fields);
+
+        Mail::to($this->fields['to'])
+            ->queue(new Notification($this->fields));
     }
 }

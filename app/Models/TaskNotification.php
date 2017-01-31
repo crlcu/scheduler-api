@@ -116,8 +116,8 @@ class TaskNotification extends Model
             'to'        => $this->to,
             'subject'   => $this->subject,
             'data'      => [
-                // 'notification'  => $this,
-                // 'task'          => $this->task,
+                'notification'  => $this,
+                'task'          => $this->task,
             ],
         ];
     }
